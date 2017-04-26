@@ -1,0 +1,4 @@
+Django<1.11
+psycopg2==2.7.1
+djangorestframework==3.6.2
+django-localflavor==1.4.1

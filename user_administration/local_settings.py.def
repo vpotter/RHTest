@@ -1,0 +1,11 @@
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': '',
+        'NAME': 'user_administration',
+        'USER': '',
+        'PASSWORD': '',
+    }
+}
+
+GOOGLE_CLIENT_ID = ''
