@@ -1,0 +1,32 @@
+<html>
+<head>
+</head>
+<body>
+<div><div class="g-signin2" data-onsuccess="onSignIn"></div></div>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://apis.google.com/js/api:client.js"></script>
+<script src="/js/config.js" async defer></script>
+<script type="text/javascript">
+function onSignIn(googleUser) {
+    var token_id = googleUser.getAuthResponse().id_token;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', BACKEND_URL + '/api/users/', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('Authorization', 'Token ' + token_id);
+    xhr.onload = function() {
+        console.log('Signed in as: ' + xhr.responseText);
+    };
+    xhr.send();
+}
+var startApp = function() {
+    gapi.load('auth2', function(){
+      auth2 = gapi.auth2.init({
+        client_id: GOOGLE_CLIENT_ID,
+        cookiepolicy: 'single_host_origin',
+      });
+    });
+  };
+  startApp();
+</script>
+</body>
+</html>

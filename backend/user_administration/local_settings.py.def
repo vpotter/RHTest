@@ -9,3 +9,4 @@ DATABASES = {
 }
 
 GOOGLE_CLIENT_ID = ''
+SECRET_KEY = ''

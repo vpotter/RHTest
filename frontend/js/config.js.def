@@ -1,0 +1,2 @@
+var GOOGLE_CLIENT_ID = '';
+var BACKEND_URL = '';
