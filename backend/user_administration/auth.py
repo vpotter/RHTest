@@ -20,7 +20,7 @@ class GoogleAuthentication(TokenAuthentication):
             if idinfo['iss'] not in auth_domains:
                 raise crypt.AppIdentityError("Wrong issuer.")
 
-            user = User.objects.get(email=idinfo['email'])
+            user = User.objects.get(username=idinfo['email'])
             return (user, token)
         except (crypt.AppIdentityError, User.DoesNotExist):
             raise AuthenticationFailed('Invalid token.')

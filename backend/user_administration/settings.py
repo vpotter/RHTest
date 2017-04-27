@@ -28,6 +28,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -122,7 +123,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAdminUser',
     ),
-    # Auth User
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'user_administration.auth.CustomSessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
