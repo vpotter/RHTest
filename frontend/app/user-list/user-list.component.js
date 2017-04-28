@@ -13,6 +13,5 @@ angular.
     }],
     bindings: {
         showDetails : '&onSelected',
-        selected: '<'
     }
   });

@@ -18,6 +18,15 @@
                     <input required ng-model="$ctrl.selected.iban">
                 </md-input-container>
             </div>
+            <md-dialog-actions layout="row">
+                <span flex></span>
+                <md-button ng-click="userForm.$valid && $ctrl.onSubmit()">
+                    Save
+                </md-button>
+                <md-button ng-click="$ctrl.onCancel()">
+                    Cancel
+                </md-button>
+            </md-dialog-actions>
         </form>
     </div>
 </md-content>

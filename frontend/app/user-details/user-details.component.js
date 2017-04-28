@@ -3,6 +3,8 @@ angular.
   component('userDetails', {
     templateUrl: 'app/user-details/user-details.template.html',
     bindings: {
-        selected: '<'
+        selected: '<',
+        onSubmit : '&',
+        onCancel : '&'
     }
   });

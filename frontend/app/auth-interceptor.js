@@ -18,7 +18,6 @@ app.factory('authInterceptorService', ['$q', '$location', function ($q, $locatio
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
             // display login modal dialog here
-            // $location.path('/login');
         }
         return $q.reject(rejection);
     }
