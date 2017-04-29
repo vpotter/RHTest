@@ -2,7 +2,7 @@
 
 var app = angular.
     module('userAdminApp', ['ngMaterial', 'ngRoute', 'userList', 'userDetails']).
-    controller('AppController', ['$mdDialog', '$rootScope', function AppController($mdDialog, $rootScope){
+    controller('AppController', ['$mdDialog', '$rootScope', 'authService', function AppController($mdDialog, $rootScope, authService){
         var self = this;
 
         self.selectUser = function(user) {

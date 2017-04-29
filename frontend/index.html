@@ -6,7 +6,6 @@
 <body>
     <md-toolbar layout="row" class="md-toolbar-tools">
         <h1>User Administration</h1>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </md-toolbar>
     <div flex layout="row">
 
@@ -16,9 +15,9 @@
             </user-list>
         </md-content>
     </div>
+    <div class="g-signin2 hide"></div>
 
     <script src="/js/config.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/api:client.js"></script>
     <script src="/node_modules/angular/angular.js"></script>
     <script src="/node_modules/angular-route/angular-route.js"></script>
@@ -30,25 +29,11 @@
     <!-- App Files -->
     <script src="/app/app.module.js"></script>
     <script src="/app/app.config.js"></script>
-    <script src="/app/auth-interceptor.js"></script>
+    <script src="/app/services/auth.service.js"></script>
+    <script src="/app/services/auth.interceptor.js"></script>
     <script src="/app/user-list/user-list.module.js"></script>
     <script src="/app/user-list/user-list.component.js"></script>
     <script src="/app/user-details/user-details.module.js"></script>
     <script src="/app/user-details/user-details.component.js"></script>
-    <script type="text/javascript">
-    function onSignIn(googleUser) {
-        var token_id = googleUser.getAuthResponse().id_token;
-        localStorage.setItem("authToken", token_id);
-    }
-    var startApp = function() {
-        gapi.load('auth2', function(){
-          auth2 = gapi.auth2.init({
-            client_id: GOOGLE_CLIENT_ID,
-            cookiepolicy: 'single_host_origin',
-          });
-        });
-      };
-      startApp();
-    </script>
 </body>
 </html>
