@@ -6,27 +6,33 @@ angular.
     templateUrl: 'app/user-list/user-list.template.html',
     controller: ['$rootScope', '$mdDialog', 'User', function UserListController($rootScope, $mdDialog, User) {
         var self = this;
-        User.query(function(result) {self.users = result.results});
+
+        User.query(function(result) {
+            self.users = []
+            angular.forEach(result.results, function(value, key) {
+                self.users.push(new User(value));
+            });
+        });
 
         self.showDetails = function(user) {
-            user = user || {own: true}
+            user = user || new User({own: true});
 
             const dialogScope = $rootScope.$new(true);
+            /* Copy selected user model to the form scope
+            so list item is not updated simulteneously with form
+            */
             dialogScope.selected = angular.copy(user);
 
 
             dialogScope.onSubmit = function() {
-                var user_resource = new User();
-                user_resource.first_name = dialogScope.selected.first_name;
-                user_resource.last_name = dialogScope.selected.last_name;
-                user_resource.iban = dialogScope.selected.iban;
-                if (user.id) {
-                    user_resource.$update({id: user.id}, function() {
+                if (dialogScope.selected.id) {
+                    dialogScope.selected.$update(function() {
+                        // Copy edited data back to selected user model
+                        angular.copy(dialogScope.selected, user);
                         $mdDialog.hide();
                     });
                 } else {
-                    user_resource.$save(function() {
-                        dialogScope.selected.id = user_resource.id;
+                    dialogScope.selected.$save(function() {
                         self.users.push(dialogScope.selected);
                         $mdDialog.hide();
                     });
@@ -34,9 +40,9 @@ angular.
             };
             dialogScope.onDelete = function() {
                 console.log('onDelete');
-                var user_resource = new User();
-                user_resource.$delete({id: user.id}, function() {
-                    self.users.splice(self.users.indexOf(user), 1);
+                dialogScope.selected.$delete(function() {
+                    self.users.splice(
+                        self.users.indexOf(user), 1);
                 });
                 $mdDialog.hide();
             };
@@ -49,12 +55,6 @@ angular.
                 template: '<user-details selected=selected on-submit="onSubmit()" on-cancel="onCancel()" on-delete="onDelete()"></user-details>',
                 scope: dialogScope,
                 clickOutsideToClose:true,
-            })
-            .then(function() {
-                console.log('success', dialogScope.selected);
-                angular.copy(dialogScope.selected, user);
-            }, function() {
-                console.log('canceled');
             });
       };
     }],

@@ -28,7 +28,7 @@ angular.
         auth2 = gapi.auth2.init({
             client_id: GOOGLE_CLIENT_ID,
             cookiepolicy: 'single_host_origin',
-        })
+        });
 
         auth2.isSignedIn.listen(this.signinChanged);
         auth2.currentUser.listen(this.userChanged);
