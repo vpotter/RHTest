@@ -1,4 +1,4 @@
 'use strict';
 
-var app = angular.
-    module('userAdminApp', ['ngMaterial', 'ngRoute', 'ngResource', 'userList', 'userDetails']);
+angular
+    .module('userAdminApp', ['ngMaterial', 'ngMessages', 'ngRoute', 'ngResource', 'userList', 'userDetails', 'exceptionHandler']);

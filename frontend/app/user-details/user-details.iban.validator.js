@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('userDetails')
     .directive('iban', function (){

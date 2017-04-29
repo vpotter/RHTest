@@ -17,7 +17,7 @@ angular.
         self.showDetails = function(user) {
             user = user || new User({own: true});
 
-            const dialogScope = $rootScope.$new(true);
+            var dialogScope = $rootScope.$new(true);
             /* Copy selected user model to the form scope
             so list item is not updated simulteneously with form
             */
@@ -26,28 +26,32 @@ angular.
 
             dialogScope.onSubmit = function() {
                 if (dialogScope.selected.id) {
-                    dialogScope.selected.$update(function() {
-                        // Copy edited data back to selected user model
-                        angular.copy(dialogScope.selected, user);
-                        $mdDialog.hide();
-                    });
+                    dialogScope.selected.$update()
+                        .then(
+                            function() {
+                                // Copy edited data back to selected user model
+                                angular.copy(dialogScope.selected, user);
+                                $mdDialog.hide();
+                            });
                 } else {
-                    dialogScope.selected.$save(function() {
-                        self.users.push(dialogScope.selected);
-                        $mdDialog.hide();
-                    });
+                    dialogScope.selected.$save()
+                        .then(
+                            function() {
+                                self.users.push(dialogScope.selected);
+                                $mdDialog.hide();
+                            });
                 }
             };
             dialogScope.onDelete = function() {
-                console.log('onDelete');
-                dialogScope.selected.$delete(function() {
-                    self.users.splice(
-                        self.users.indexOf(user), 1);
-                });
+                dialogScope.selected.$delete()
+                    .then(
+                        function() {
+                            self.users.splice(
+                                self.users.indexOf(user), 1);
+                        });
                 $mdDialog.hide();
             };
             dialogScope.onCancel = function() {
-                console.log('onCancel');
                 $mdDialog.cancel();
             };
 

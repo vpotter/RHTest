@@ -1,3 +1,3 @@
-angular.module('userDetails', [
-  'ngMaterial'
-]);
+'use strict';
+
+angular.module('userDetails', ['ngMaterial']);

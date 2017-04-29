@@ -17,7 +17,7 @@
                     <label>IBAN</label>
                     <input name="iban" required iban ng-model="$ctrl.selected.iban">
                     <div ng-messages="userForm.iban.$error" role="alert">
-                        <div ng-message-exp="['iban']">
+                        <div ng-message="iban">
                             This field is required and should be valid a IBAN
                         </div>
                     </div>
