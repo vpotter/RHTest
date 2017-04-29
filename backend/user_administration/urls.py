@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 from users.views import UserViewSet
 
 router = DefaultRouter(trailing_slash=False)
-router.register(r'users/', UserViewSet, base_name='users')
+router.register(r'users', UserViewSet, base_name='users')
 
 urlpatterns = [
     url(r'^_admin/', include(admin.site.urls)),

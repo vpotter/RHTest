@@ -5,6 +5,7 @@ angular.
     bindings: {
         selected: '<',
         onSubmit : '&',
-        onCancel : '&'
+        onCancel : '&',
+        onDelete : '&'
     }
   });

@@ -20,10 +20,16 @@
             </div>
             <md-dialog-actions layout="row">
                 <span flex></span>
-                <md-button ng-click="userForm.$valid && $ctrl.onSubmit()">
+                <md-button ng-show="$ctrl.selected.id" class="md-raised md-warn" ng-click="$ctrl.onDelete()">
+                    DELETE
+                </md-button>
+                <md-button ng-show="$ctrl.selected.id" class="md-raised md-primary" ng-click="userForm.$valid && $ctrl.onSubmit()">
                     Save
                 </md-button>
-                <md-button ng-click="$ctrl.onCancel()">
+                <md-button ng-show="!$ctrl.selected.id" class="md-raised md-primary" ng-click="userForm.$valid && $ctrl.onSubmit()">
+                    Add
+                </md-button>
+                <md-button class="md-raised" ng-click="$ctrl.onCancel()">
                     Cancel
                 </md-button>
             </md-dialog-actions>

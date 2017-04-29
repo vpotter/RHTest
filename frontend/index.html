@@ -1,4 +1,4 @@
-<html ng-app="userAdminApp" ng-controller="AppController as app">
+<html ng-app="userAdminApp">
 <head>
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700'>
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
@@ -10,9 +10,7 @@
     <div flex layout="row">
 
         <md-content flex=50 id="list_container">
-            <user-list
-                on-selected="app.selectUser(user)">
-            </user-list>
+            <user-list></user-list>
         </md-content>
     </div>
     <div class="g-signin2 hide"></div>
@@ -21,6 +19,7 @@
     <script src="https://apis.google.com/js/api:client.js"></script>
     <script src="/node_modules/angular/angular.js"></script>
     <script src="/node_modules/angular-route/angular-route.js"></script>
+    <script src="/node_modules/angular-resource/angular-resource.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>
@@ -29,6 +28,7 @@
     <!-- App Files -->
     <script src="/app/app.module.js"></script>
     <script src="/app/app.config.js"></script>
+    <script src="/app/services/api.service.js"></script>
     <script src="/app/services/auth.service.js"></script>
     <script src="/app/services/auth.interceptor.js"></script>
     <script src="/app/user-list/user-list.module.js"></script>

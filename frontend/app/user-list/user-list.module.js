@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('userList', []);
+angular.module('userList', ['userDetails']);

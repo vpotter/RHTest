@@ -13,5 +13,11 @@ class UserViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin,
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
+
+    def get_serializer_context(self):
+        return {'auth_user': self.request.user}
+
     def get_queryset(self):
         return User.objects.all()
