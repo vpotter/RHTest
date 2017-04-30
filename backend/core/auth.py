@@ -8,22 +8,37 @@ from rest_framework.authentication import (
 
 class GoogleAuthentication(TokenAuthentication):
 
+    def authenticate(self, request):
+        self.request = request
+        return super().authenticate(request)
+
     def authenticate_credentials(self, token):
         User = get_user_model()
+
+        _token = self.request.session.get('token')
+        email = self.request.session.get('email')
+
+        if token != _token:
+            try:
+                idinfo = client.verify_id_token(
+                    token, settings.GOOGLE_CLIENT_ID)
+                auth_domains = [
+                    'accounts.google.com',
+                    'https://accounts.google.com']
+                if idinfo['iss'] not in auth_domains:
+                    raise crypt.AppIdentityError("Wrong issuer.")
+
+                email = idinfo['email']
+            except crypt.AppIdentityError:
+                raise AuthenticationFailed('Invalid token.')
+
         try:
-            idinfo = client.verify_id_token(
-                token, settings.GOOGLE_CLIENT_ID)
-
-            auth_domains = [
-                'accounts.google.com',
-                'https://accounts.google.com']
-            if idinfo['iss'] not in auth_domains:
-                raise crypt.AppIdentityError("Wrong issuer.")
-
-            user = User.objects.get(username=idinfo['email'])
+            user = User.objects.get(username=email)
+            self.request.session['token'] = token
+            self.request.session['email'] = email
             return (user, token)
-        except (crypt.AppIdentityError, User.DoesNotExist):
-            raise AuthenticationFailed('Invalid token.')
+        except User.DoesNotExist:
+            raise AuthenticationFailed('User does not exist.')
 
 
 class CustomSessionAuthentication(SessionAuthentication):

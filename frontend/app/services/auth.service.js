@@ -32,24 +32,16 @@ angular.
             cookiepolicy: 'single_host_origin',
         });
 
-        auth2.isSignedIn.listen(this.signinChanged);
         auth2.currentUser.listen(this.userChanged);
     };
 
     authServiceFactory.getToken = function(refresh) {
         refresh = refresh || false;
 
-        if ($rootScope.current_user && !refresh) {
-            var auth_response = $rootScope.current_user.getAuthResponse();
-            var current_timestamp = new Date().getTime();
-            if (auth_response.expires_at > current_timestamp) {
-                return $q.when(auth_response.id_token);
-            } else {
-                return $q.when($rootScope.current_user.reloadAuthResponse())
-                        .then(function() {
-                            return $rootScope.current_user.getAuthResponse().id_token;
-                        });
-            }
+        var authToken = localStorage.getItem("authToken");
+
+        if (authToken && !refresh) {
+            return $q.when(authToken);
         }
 
         var promise_chain = this.init();
@@ -71,15 +63,20 @@ angular.
 
     authServiceFactory.signOut = function() {
         var _auth2 = gapi.auth2.getAuthInstance();
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('currentUserEmail');
         return $q.when(_auth2.signOut());
     };
 
     authServiceFactory.userChanged = function(user){
-        $rootScope.current_user = user;
-    };
+        if (user.isSignedIn()) {
+            $rootScope.current_user = user;
 
-    authServiceFactory.signinChanged = function(isSignedIn) {
-        console.log(isSignedIn);
+            var current_user_email = $rootScope.current_user.getBasicProfile().getEmail();
+            $rootScope.current_user_email = current_user_email;
+            localStorage.setItem('authToken', $rootScope.current_user.getAuthResponse().id_token);
+            localStorage.setItem('currentUserEmail', current_user_email);
+        }
     };
 
     return authServiceFactory;

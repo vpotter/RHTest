@@ -127,8 +127,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAdminUser',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'core.auth.CustomSessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
         'core.auth.GoogleAuthentication',
     ),
     'DEFAULT_PARSER_CLASSES': (

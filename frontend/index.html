@@ -7,8 +7,8 @@
     <md-toolbar layout="row" class="md-toolbar-tools">
         <h1>User Administration</h1>
         <span flex></span>
-        <p ng-show="$root.current_user">{{$root.current_user.getBasicProfile().getEmail()}}</p>
-        <md-button ng-show="$root.current_user" ng-click="app.signOut()">Sign out</md-button>
+        <p ng-show="$root.current_user_email">{{$root.current_user_email}}</p>
+        <md-button ng-show="$root.current_user_email" ng-click="app.signOut()">Sign out</md-button>
     </md-toolbar>
     <div flex layout="row">
 

@@ -6,6 +6,7 @@ angular
         var self = this;
 
         authService.init();
+        $rootScope.current_user_email = localStorage.getItem("currentUserEmail");
 
         self.signOut = function() {
             console.log('sign out');
