@@ -6,11 +6,12 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import User
 from .serializers import UserSerializer
+from .permissions import IsCreatorOrReadOnly
 
 
 class UserViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin,
                   UpdateModelMixin, DestroyModelMixin, GenericViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsCreatorOrReadOnly)
     serializer_class = UserSerializer
 
     def perform_create(self, serializer):
