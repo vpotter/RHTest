@@ -22,22 +22,21 @@ angular.
                 });
         }
         var result = promise_chain
-                        .then(
-                            function(){
-                                return authService.getToken(config.retry)
-                            })
-                        .catch(function(error) {
-                            $exceptionHandler({
-                                name: '401 Unauthorized Error',
-                                message: "Sorry, you don't have access to the application"}, null, true);
-                        })
-                        .then(
-                            function(token) {
-                                config.headers = config.headers || {};
-                                config.headers.Authorization = 'Token ' + token;
-                                return config;
-                            }
-                        );
+            .then(
+                function(){
+                    return authService.getToken(config.retry)
+                })
+            .then(
+                function(token) {
+                    config.headers = config.headers || {};
+                    config.headers.Authorization = 'Token ' + token;
+                    return config;
+                })
+            .catch(function(error) {
+                return $exceptionHandler({
+                    name: '401 Unauthorized Error',
+                    message: "Sorry, you don't have access to the application"}, null, true);
+            });
         return result;
     };
 

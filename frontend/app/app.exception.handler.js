@@ -37,6 +37,6 @@ angular
 '  </md-dialog-content>' +
 '</md-dialog>';
             }
-            $mdDialog.show($mdDialog.alert(dialog_options));
+            return $mdDialog.show($mdDialog.alert(dialog_options));
         };
     }]);
