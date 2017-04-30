@@ -7,7 +7,7 @@ angular.
     controller: ['$rootScope', '$mdDialog', 'User', function UserListController($rootScope, $mdDialog, User) {
         var self = this;
 
-        User.query(function(result) {
+        User.query().$promise.then(function(result) {
             self.users = []
             angular.forEach(result.results, function(value, key) {
                 self.users.push(new User(value));
