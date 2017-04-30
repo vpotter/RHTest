@@ -1,12 +1,12 @@
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': '',
+        # 'HOST': '',
         'NAME': 'user_administration',
-        'USER': '',
-        'PASSWORD': '',
+        'USER': 'vagrant',
+        'PASSWORD': 'vagrant',
     }
 }
 
 GOOGLE_CLIENT_ID = ''
-SECRET_KEY = ''
+SECRET_KEY = 'some secret key'
