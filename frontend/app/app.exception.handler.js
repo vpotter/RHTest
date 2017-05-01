@@ -29,9 +29,7 @@ angular
 '<md-dialog md-theme="{{ dialog.theme || dialog.defaultTheme }}" aria-label="{{ dialog.ariaLabel }}" ng-class="dialog.css">' +
 '  <md-dialog-content class="md-dialog-content" role="document" tabIndex="-1">' +
 '    <h2 class="md-title">{{ dialog.title }}</h2>' +
-'    <div ng-if="::dialog.mdHtmlContent" class="md-dialog-content-body" ' +
-'        ng-bind-html="::dialog.mdHtmlContent"></div>' +
-'    <div ng-if="::!dialog.mdHtmlContent" class="md-dialog-content-body">' +
+'    <div class="md-dialog-content-body">' +
 '      <p>{{::dialog.mdTextContent}}</p>' +
 '    </div>' +
 '  </md-dialog-content>' +

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.
-    module('userAdminApp').factory('authService', ['$q', '$rootScope', function($q, $rootScope) {
+    module('userAdminApp').factory('authService', ['$q', '$rootScope', '$injector', function($q, $rootScope, $injector) {
     var auth2;
     var _clientId = '';
     var authServiceFactory = {};
@@ -35,9 +35,33 @@ angular.
         auth2.currentUser.listen(this.userChanged);
     };
 
+    authServiceFactory.showLoginDialog = function() {
+        var deferred = $q.defer();
+
+        var dialogScope = $rootScope.$new(true);
+        dialogScope.onClick = function() {
+            deferred.resolve(auth2.signIn().then($mdDialog.hide));
+        };
+
+        var $mdDialog = $injector.get('$mdDialog');
+        $mdDialog
+                .show({
+                    template:
+'<md-dialog ng-class="dialog.css">' +
+'  <md-dialog-content class="md-dialog-content">' +
+'    <div class="md-dialog-content-body">' +
+'      <p>Access allowed only for white-listed users.<br />Please authenticate using your Google Account.</p>' +
+'       <md-button ng-click="onClick()">GO!</md-button>'+
+'    </div>' +
+'  </md-dialog-content>' +
+'</md-dialog>',
+                    scope: dialogScope
+                });
+        return deferred.promise;
+    };
+
     authServiceFactory.getToken = function(refresh) {
         refresh = refresh || false;
-
         var authToken = localStorage.getItem("authToken");
 
         if (authToken && !refresh) {
@@ -48,18 +72,18 @@ angular.
         if (refresh) {
             promise_chain = promise_chain.then(this.signOut);
         }
-        var result = promise_chain.then(this.signIn);
-        return result;
+        return promise_chain.then(this.signIn);
     };
 
     authServiceFactory.signIn = function() {
-        return $q.when(auth2.signIn({'prompt': 'select_account'}).then(function(){}))
-                .then(function(response){
-                    return $q(function(resolve, reject) {
-                            resolve($rootScope.current_user.getAuthResponse().id_token);
-                           });
-                });
-        };
+        var deferred = $q.defer();
+
+        authServiceFactory.showLoginDialog()
+            .then(function(response){
+                deferred.resolve($rootScope.current_user.getAuthResponse().id_token);
+            });
+        return deferred.promise;
+    };
 
     authServiceFactory.signOut = function() {
         var _auth2 = gapi.auth2.getAuthInstance();

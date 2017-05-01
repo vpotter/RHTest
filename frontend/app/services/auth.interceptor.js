@@ -9,22 +9,10 @@ angular.
 
     authInterceptorServiceFactory.request = function (config) {
         var promise_chain = $q.when('');
-
-        if (config.retry) {
-            var $mdDialog = $injector.get('$mdDialog');
-            promise_chain = promise_chain
-                .then(function() {
-                    return $mdDialog
-                        .show($mdDialog.confirm({
-                            textContent: "You don't have access to the application. Please try to re-login using different account",
-                            ok: 'Close'
-                    }));
-                });
-        }
         var result = promise_chain
             .then(
                 function(){
-                    return authService.getToken(config.retry)
+                    return authService.getToken(config.retry);
                 })
             .then(
                 function(token) {
