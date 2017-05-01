@@ -13,6 +13,8 @@ class UserViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin,
                   UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     permission_classes = (IsAuthenticated, IsCreatorOrReadOnly)
     serializer_class = UserSerializer
+    pagination_class = None
+    ordering = ('-id',)
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)

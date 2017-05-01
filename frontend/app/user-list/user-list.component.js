@@ -8,10 +8,7 @@ angular.
         var self = this;
 
         User.query().$promise.then(function(result) {
-            self.users = []
-            angular.forEach(result.results, function(value, key) {
-                self.users.push(new User(value));
-            });
+            self.users = result;
         });
 
         self.showDetails = function(user) {
@@ -37,7 +34,7 @@ angular.
                     dialogScope.selected.$save()
                         .then(
                             function() {
-                                self.users.push(dialogScope.selected);
+                                self.users.unshift(dialogScope.selected);
                                 $mdDialog.hide();
                             });
                 }
